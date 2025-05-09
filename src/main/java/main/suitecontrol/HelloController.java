@@ -1,5 +1,6 @@
 package main.suitecontrol;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,4 +22,5 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
+
 }

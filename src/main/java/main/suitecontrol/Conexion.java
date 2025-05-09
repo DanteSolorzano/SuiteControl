@@ -20,12 +20,12 @@ public class Conexion {
             ps.setString(2, "Dante");
             ps.setString(3, "Solorzano");
             ps.setString(4, "Ferrer");
-            ps.setInt(5, 4621605);
+            ps.setInt(5, 462160519);
             ps.setString(6, "solorzanodante19@gmail.com");
             ps.setString(7, "INE");
             ps.execute();
 
-            conexion.close();
+
 
         } catch (Exception ex){
             System.err.println(ex);

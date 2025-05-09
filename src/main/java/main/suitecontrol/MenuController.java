@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MenuController {
+
+    //botones para interaccion entre escenas
     private Stage stage;
     private Scene scene;
     private Parent root;

@@ -3,29 +3,41 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="813.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="813.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.ClientesController">
    <children>
       <AnchorPane layoutX="26.0" layoutY="43.0" prefHeight="760.0" prefWidth="346.0" style="-fx-border-style: solid; -fx-border-color: grery;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="43.0">
          <children>
             <Label layoutX="28.0" layoutY="21.0" text="Nombre" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" />
-            <TextField layoutX="14.0" layoutY="38.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
+            <TextField fx:id="txtNombre" layoutX="14.0" layoutY="38.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
             <Label layoutX="11.0" layoutY="78.0" text="Apellido paterno" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="75.0" />
-            <TextField layoutX="11.0" layoutY="102.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0" />
+            <TextField fx:id="txtApaterno" layoutX="11.0" layoutY="102.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0" />
             <Label layoutX="11.0" layoutY="129.0" text="Apellido materno" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="125.0" />
-            <TextField layoutX="11.0" layoutY="143.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="145.0" />
+            <TextField fx:id="txtAmaterno" layoutX="11.0" layoutY="143.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="145.0" />
             <Label layoutX="11.0" layoutY="171.0" text="Numero de telefono" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="175.0" />
-            <TextField layoutX="11.0" layoutY="193.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="195.0" />
+            <TextField fx:id="txtTelefono" layoutX="11.0" layoutY="193.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="195.0" />
             <Label layoutX="11.0" layoutY="229.0" text="Correo" AnchorPane.topAnchor="225.0" />
-            <TextField layoutX="11.0" layoutY="243.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="245.0" />
+            <TextField fx:id="txtCorreo" layoutX="11.0" layoutY="243.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="245.0" />
             <Label layoutX="11.0" layoutY="279.0" text="Tipo de identificacion" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="275.0" />
-            <ComboBox layoutX="14.0" layoutY="301.0" prefWidth="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="295.0" />
-            <Button layoutX="14.0" layoutY="332.0" mnemonicParsing="false" text="Guardar" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <Button layoutX="14.0" layoutY="368.0" mnemonicParsing="false" text="Cancelar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <ComboBox fx:id="cboID" layoutX="14.0" layoutY="301.0" prefWidth="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="295.0" />
+            <Button fx:id="btnGuardar" layoutX="14.0" layoutY="332.0" mnemonicParsing="false" onAction="#btnGuardadOnAction" text="Guardar" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <Button fx:id="btnCancelar" disable="true" layoutX="14.0" layoutY="368.0" mnemonicParsing="false" onAction="#btnCancelarOnAction" text="Cancelar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
          </children>
       </AnchorPane>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonRegresar" prefHeight="25.0" prefWidth="79.0" text="Regresar" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="1007.0" AnchorPane.topAnchor="10.0" />
+      <AnchorPane layoutX="371.0" layoutY="43.0" prefHeight="760.0" prefWidth="712.0" style="-fx-border-style: solid; -fx-border-color: grey;">
+         <children>
+            <TableView fx:id="tableViewClientes" layoutX="40.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="436.0" layoutY="9.0" prefHeight="27.0" prefWidth="225.0" text="Manejador de huespedes">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
