@@ -37,7 +37,7 @@ public class ClienteDao {
 
         } catch(Exception ex){
             System.err.println(ex);
-            System.err.println("ocurrio un erro al registrar la tarea");
+            System.err.println("ocurrio un erro al registrar el usuario");
             System.err.println("ERROR: " + ex.getMessage());
         }
         return true;
@@ -135,7 +135,7 @@ public class ClienteDao {
             return true;
         }catch (Exception ex){
             System.err.println(ex);
-            System.err.println("ocurrio un erro al editar un cliente");
+            System.err.println("ocurrio un erro al eliminar un cliente");
             System.err.println("ERROR: " + ex.getMessage());
 
             return false;
