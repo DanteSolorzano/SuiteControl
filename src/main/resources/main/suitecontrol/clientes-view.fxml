@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="813.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.ClientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.ClientesController">
    <children>
       <AnchorPane layoutX="26.0" layoutY="43.0" prefHeight="760.0" prefWidth="346.0" style="-fx-border-style: solid; -fx-border-color: grery;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="43.0">
          <children>
@@ -28,10 +28,10 @@
             <Button fx:id="btnCancelar" disable="true" layoutX="14.0" layoutY="368.0" mnemonicParsing="false" onAction="#btnCancelarOnAction" text="Cancelar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
          </children>
       </AnchorPane>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonRegresar" prefHeight="25.0" prefWidth="79.0" text="Regresar" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="1007.0" AnchorPane.topAnchor="10.0" />
-      <AnchorPane layoutX="371.0" layoutY="43.0" prefHeight="760.0" prefWidth="712.0" style="-fx-border-style: solid; -fx-border-color: grey;">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonRegresar" prefHeight="25.0" prefWidth="93.0" text="Regresar" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="947.0" AnchorPane.topAnchor="10.0" />
+      <AnchorPane layoutX="371.0" layoutY="43.0" prefHeight="682.0" prefWidth="657.0" style="-fx-border-style: solid; -fx-border-color: grey;">
          <children>
-            <TableView fx:id="tableViewClientes" layoutX="40.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <TableView fx:id="tableViewClientes" layoutX="13.0" layoutY="13.0" prefHeight="640.0" prefWidth="634.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0" />
          </children>
       </AnchorPane>
       <Label layoutX="436.0" layoutY="9.0" prefHeight="27.0" prefWidth="225.0" text="Manejador de huespedes">

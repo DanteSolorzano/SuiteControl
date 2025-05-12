@@ -24,8 +24,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ClientesController implements Initializable {
 
+
+public class ClientesController implements Initializable {
     public TextField txtAmaterno;
     @FXML
     private Button btnCancelar;
@@ -61,6 +62,7 @@ public class ClientesController implements Initializable {
     //Agrega las opciones al combo box
     @Override
     public void initialize(URL url, ResourceBundle rb){
+
         String[] opciones = {"INE", "Pasaporte", "Cartilla militar", "ID(extranjeros)"};
 
         ObservableList<String> items = FXCollections.observableArrayList(opciones);
@@ -89,7 +91,7 @@ public class ClientesController implements Initializable {
 
                 clienteSeleccion = tableViewClientes.getItems().get(index);
 
-                System.out.println( clienteSeleccion );
+                //System.out.println( clienteSeleccion );
 
                 txtNombre.setText(clienteSeleccion.getNombre());
                 txtApaterno.setText(clienteSeleccion.getApellido_p());
