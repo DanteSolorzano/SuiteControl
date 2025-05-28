@@ -2,11 +2,11 @@ package main.modelo;
 
 public class Habitacion {
 
-    int id_habitacion;
-    String tipo_habitacion;
-    String numero_habitacion;
-    String precio_noche;
-    String estado;
+    private int id_habitacion;
+    private String tipo_habitacion;
+    private String numero_habitacion;
+    private String precio_noche;
+    private String estado;
 
     public Habitacion() {
     }

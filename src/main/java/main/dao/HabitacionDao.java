@@ -2,6 +2,7 @@ package main.dao;
 
 import main.modelo.Cliente;
 import main.modelo.Habitacion;
+import main.modelo.Reservacion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -138,4 +139,45 @@ public class HabitacionDao {
             return false;
         }
     }
+
+    public List<Habitacion> listarDisponible(){
+
+        String cadena = "jdbc:sqlite:database.db";
+        List<Habitacion> listaHabitacionesDisponible = new ArrayList<>();
+
+        try{
+            Connection conexion = DriverManager.getConnection(cadena);
+
+            String insertar = "SELECT * FROM habitaciones WHERE estado = 'Disponible';";
+            PreparedStatement ps = conexion.prepareStatement(insertar);
+            ResultSet data = ps.executeQuery();
+
+            while(data.next()){
+
+                Habitacion habitacion = new Habitacion();
+
+                habitacion.setId_habitacion(data.getInt(1));
+                habitacion.setTipo_habitacion(data.getString(2));
+                habitacion.setNumero_habitacion(data.getString(3));
+                habitacion.setPrecio_noche(data.getString(4));
+                habitacion.setEstado(data.getString(5));
+
+
+
+                listaHabitacionesDisponible.add(habitacion);
+            }
+            data.close();
+            ps.close();
+            conexion.close();
+
+        }catch (Exception ex){
+            System.err.println(ex);
+            System.err.println("ocurrio un erro al listar una habitacion");
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+        return listaHabitacionesDisponible;
+    }
+
+
+
 }
