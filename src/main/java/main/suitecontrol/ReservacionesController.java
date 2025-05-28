@@ -77,7 +77,7 @@ public class ReservacionesController implements Initializable {
         cboCliente.setButtonCell(cboCliente.getCellFactory().call(null));
 
         HabitacionDao habitacionDao = new HabitacionDao();
-        List<Habitacion> listaHabitaciones = habitacionDao.listarDisponible();
+        List<Habitacion> listaHabitaciones = habitacionDao.listar();
         ObservableList<Habitacion> habitacionObservable = FXCollections.observableArrayList(listaHabitaciones);
         cboHabitacion.setItems(habitacionObservable);
 
@@ -185,96 +185,101 @@ public class ReservacionesController implements Initializable {
     }
 
     public void btnGuardarOnAction(ActionEvent event) {
+        // Obtener valores comunes
+        Cliente clienteSeleccionado = cboCliente.getSelectionModel().getSelectedItem();
+        Habitacion habitacionSeleccionada = cboHabitacion.getSelectionModel().getSelectedItem();
+        LocalDate entrada = fecha_inicio.getValue();
+        LocalDate salida = fecha_final.getValue();
+
+        // Validación básica de campos
+        if (clienteSeleccionado == null || habitacionSeleccionada == null ||
+                entrada == null || salida == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, complete todos los campos");
+            alert.showAndWait();
+            return;
+        }
+
+        // Validar disponibilidad ANTES de procesar
+        if (!validarDisponibilidad(habitacionSeleccionada, entrada, salida)) {
+            return;
+        }
 
         if( reservacionSeleccion == null){
-                Reservacion reservacion = new Reservacion();
-                Cliente clienteSeleccionado = cboCliente.getSelectionModel().getSelectedItem();
-                Habitacion habitacionSeleccionada = cboHabitacion.getSelectionModel().getSelectedItem();
+            Reservacion reservacion = new Reservacion();
+            // Usamos las variables ya declaradas al inicio
+            reservacion.setId_cliente(clienteSeleccionado.getId_cliente());
+            reservacion.setId_habitacion(habitacionSeleccionada.getId_habitacion());
+            reservacion.setFecha_entrada(entrada.toString());
+            reservacion.setFecha_salida(salida.toString());
 
-                reservacion.setId_cliente(clienteSeleccionado.getId_cliente());
-                reservacion.setId_habitacion(habitacionSeleccionada.getId_habitacion());
-                reservacion.setFecha_entrada(fecha_inicio.getValue().toString());
-                reservacion.setFecha_salida(fecha_final.getValue().toString());
+            // Obtener días
+            long dias = ChronoUnit.DAYS.between(entrada, salida);
 
-                //obtener dias
-                long dias = ChronoUnit.DAYS.between(fecha_inicio.getValue(), fecha_final.getValue());
-
-                //obtener precio por noche
-
-                double precio = Double.parseDouble(habitacionSeleccionada.getPrecio_noche());
-
-                //obtener precio con iva configuracion dinamica de impuestos
-                double iva = 0.16;
-                double precioConIva = precio * (1 + iva);
-
-                //obtener total y agregarlo a la tabla
-
-                double total = dias * precioConIva;
-                reservacion.setTotal(total);
-
-                //llamada a consola auxiliar
-                //System.out.println( reservacion );
-
-                boolean rsp = this.reservacionDao.registrar(reservacion);
-
-                if (rsp){
-
-                    Alert alert = new Alert (Alert.AlertType.INFORMATION);
-                    alert.setTitle("Exito");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Se registro correctamente la reservacion");
-                    alert.initStyle(StageStyle.UTILITY);
-                    alert.showAndWait();
-                    //mandamos llamar el metodo para limpiar despues de que se registro la reservacion
-                    limpiarCampos();
-                    //mandamos llamar cargar clientes para que agregue los nuevos clientes a la lista del tableview
-                    cargarReservaciones();
-                } else {
-                    Alert alert = new Alert (Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Hubo un error con el registro de la reservacion");
-                    alert.initStyle(StageStyle.UTILITY);
-                    alert.showAndWait();
-                }
-
-        } else {
-            Cliente clienteSeleccionado = cboCliente.getSelectionModel().getSelectedItem();
-            Habitacion habitacionSeleccionada = cboHabitacion.getSelectionModel().getSelectedItem();
-
-            reservacionSeleccion.setId_cliente(clienteSeleccionado.getId_cliente());
-            reservacionSeleccion.setId_habitacion(habitacionSeleccionada.getId_habitacion());
-            reservacionSeleccion.setFecha_entrada(fecha_inicio.getValue().toString());
-            reservacionSeleccion.setFecha_salida(fecha_final.getValue().toString());
-            //obtener dias
-            long dias = ChronoUnit.DAYS.between(fecha_inicio.getValue(), fecha_final.getValue());
-
-            //obtener precio por noche
-
+            // Obtener precio por noche
             double precio = Double.parseDouble(habitacionSeleccionada.getPrecio_noche());
 
-            //obtener precio con iva configuracion dinamica de impuestos
+            // Obtener precio con IVA
             double iva = 0.16;
             double precioConIva = precio * (1 + iva);
 
-            //obtener total y agregarlo a la tabla
+            // Calcular total
+            double total = dias * precioConIva;
+            reservacion.setTotal(total);
 
+            boolean rsp = this.reservacionDao.registrar(reservacion);
+
+            if (rsp){
+                Alert alert = new Alert (Alert.AlertType.INFORMATION);
+                alert.setTitle("Éxito");
+                alert.setHeaderText(null);
+                alert.setContentText("Se registró correctamente la reservación");
+                alert.initStyle(StageStyle.UTILITY);
+                alert.showAndWait();
+                limpiarCampos();
+                cargarReservaciones();
+            } else {
+                Alert alert = new Alert (Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Hubo un error con el registro de la reservación");
+                alert.initStyle(StageStyle.UTILITY);
+                alert.showAndWait();
+            }
+
+        } else {
+            // Usamos las variables ya declaradas al inicio
+            reservacionSeleccion.setId_cliente(clienteSeleccionado.getId_cliente());
+            reservacionSeleccion.setId_habitacion(habitacionSeleccionada.getId_habitacion());
+            reservacionSeleccion.setFecha_entrada(entrada.toString());
+            reservacionSeleccion.setFecha_salida(salida.toString());
+
+            // Obtener días
+            long dias = ChronoUnit.DAYS.between(entrada, salida);
+
+            // Obtener precio por noche
+            double precio = Double.parseDouble(habitacionSeleccionada.getPrecio_noche());
+
+            // Obtener precio con IVA
+            double iva = 0.16;
+            double precioConIva = precio * (1 + iva);
+
+            // Calcular total
             double total = dias * precioConIva;
             reservacionSeleccion.setTotal(total);
 
             boolean rsp = this.reservacionDao.editar(reservacionSeleccion);
 
             if (rsp){
-
                 Alert alert = new Alert (Alert.AlertType.INFORMATION);
-                alert.setTitle("Exito");
+                alert.setTitle("Éxito");
                 alert.setHeaderText(null);
-                alert.setContentText("Se edito correctamente la reservacion");
+                alert.setContentText("Se editó correctamente la reservación");
                 alert.initStyle(StageStyle.UTILITY);
                 alert.showAndWait();
-                //mandamos llamar el metodo para limpiar despues de que se registro la reservacion
                 limpiarCampos();
-                //mandamos llamar cargar clientes para que agregue los nuevos clientes a la lista del tableview
                 cargarReservaciones();
                 reservacionSeleccion = null;
                 btnCancelarReserva.setDisable(true);
@@ -282,7 +287,7 @@ public class ReservacionesController implements Initializable {
                 Alert alert = new Alert (Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Hubo un error con editar la reservacion");
+                alert.setContentText("Hubo un error al editar la reservación");
                 alert.initStyle(StageStyle.UTILITY);
                 alert.showAndWait();
             }
@@ -335,6 +340,41 @@ public class ReservacionesController implements Initializable {
         // Cargar los datos
         tvReservaciones.setItems(data);
 
+    }
+
+    private boolean validarDisponibilidad(Habitacion habitacion, LocalDate entrada, LocalDate salida) {
+        if (habitacion == null || entrada == null || salida == null) {
+            return false;
+        }
+
+        // Validar que la fecha de salida sea posterior a la de entrada
+        if (salida.isBefore(entrada) || salida.isEqual(entrada)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error en fechas");
+            alert.setHeaderText(null);
+            alert.setContentText("La fecha de salida debe ser posterior a la fecha de entrada");
+            alert.showAndWait();
+            return false;
+        }
+
+        // Validar disponibilidad en la base de datos
+        int reservaIdExcluir = (reservacionSeleccion != null) ? reservacionSeleccion.getId_reservacion() : -1;
+
+        if (!reservacionDao.estaDisponible(
+                habitacion.getId_habitacion(),
+                entrada.toString(),
+                salida.toString(),
+                reservaIdExcluir
+        )) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de disponibilidad");
+            alert.setHeaderText(null);
+            alert.setContentText("La habitación no está disponible en las fechas seleccionadas");
+            alert.showAndWait();
+            return false;
+        }
+
+        return true;
     }
 
     @FXML

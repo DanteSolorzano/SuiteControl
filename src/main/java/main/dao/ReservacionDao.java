@@ -160,4 +160,35 @@ public class ReservacionDao {
             return false;
         }
     }
+
+    public boolean estaDisponible(int idHabitacion, String fechaEntrada, String fechaSalida, int excluirReservaId) {
+        String sql = """
+        SELECT COUNT(*) 
+        FROM reservaciones 
+        WHERE id_habitacion = ?
+          AND id_reservacion != ?
+          AND (
+            ? <= fecha_salida AND ? >= fecha_entrada
+          )
+        """;
+
+        try (Connection conexion = DriverManager.getConnection(cadena);
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setInt(1, idHabitacion);
+            ps.setInt(2, excluirReservaId);
+            ps.setString(3, fechaEntrada);
+            ps.setString(4, fechaSalida);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) == 0;
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al verificar disponibilidad: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 }
