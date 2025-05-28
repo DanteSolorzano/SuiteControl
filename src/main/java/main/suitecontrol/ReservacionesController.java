@@ -53,6 +53,13 @@ public class ReservacionesController implements Initializable {
 
     private Reservacion reservacionSeleccion;
 
+    private TableColumn<Reservacion, Integer> idCol;
+    private TableColumn<Reservacion, String> nombreClienteCol;
+    private TableColumn<Reservacion, String> numeroHabCol;
+    private TableColumn<Reservacion, String> entradaCol;
+    private TableColumn<Reservacion, String> salidaCol;
+    private TableColumn<Reservacion, Double> totalCol;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -77,7 +84,7 @@ public class ReservacionesController implements Initializable {
         cboCliente.setButtonCell(cboCliente.getCellFactory().call(null));
 
         HabitacionDao habitacionDao = new HabitacionDao();
-        List<Habitacion> listaHabitaciones = habitacionDao.listar();
+        List<Habitacion> listaHabitaciones = habitacionDao.listarDisponibles();
         ObservableList<Habitacion> habitacionObservable = FXCollections.observableArrayList(listaHabitaciones);
         cboHabitacion.setItems(habitacionObservable);
 
@@ -95,9 +102,8 @@ public class ReservacionesController implements Initializable {
         });
         cboHabitacion.setButtonCell(cboHabitacion.getCellFactory().call(null));
 
-
+        inicializarColumnas();
         this.reservacionDao = new ReservacionDao();
-
         cargarReservaciones();
 
         //creamos el menu y extraemos el cliente
@@ -143,46 +149,42 @@ public class ReservacionesController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 int index = tvReservaciones.getSelectionModel().getSelectedIndex();
+                if (index >= 0) {
+                    Reservacion reservacionEliminar = tvReservaciones.getItems().get(index);
 
-                Reservacion reservacionEliminar = tvReservaciones.getItems().get(index);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText(null);
+                    alert.setContentText("¿Estas seguro de eliminar la reservacion n°" + reservacionEliminar.getId_reservacion() + "?");
+                    Optional<ButtonType> result = alert.showAndWait();
 
-                Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("¿Estas seguro de eliminar la reservacion n°" + reservacionEliminar.getId_reservacion() + " ?");
-                alert.initStyle(StageStyle.UTILITY);
-                Optional<ButtonType> result = alert.showAndWait();
+                    if(result.get() == ButtonType.OK){
+                        boolean rsp = reservacionDao.eliminar(reservacionEliminar.getId_reservacion());
 
-                if( result.get() == ButtonType.OK){
+                        if (rsp) {
+                            // Eliminar directamente del TableView
+                            tvReservaciones.getItems().remove(index);
 
-                    boolean rsp = reservacionDao.eliminar(reservacionEliminar.getId_cliente());
-                    if (rsp){
-
-                        Alert alert2 = new Alert (Alert.AlertType.INFORMATION);
-                        alert2.setTitle("Exito");
-                        alert2.setHeaderText(null);
-                        alert2.setContentText("Se elimino correctamente el la reservacion n°"+ reservacionEliminar.getId_reservacion());
-                        alert2.initStyle(StageStyle.UTILITY);
-                        alert2.showAndWait();
-
-                        //mandamos llamar cargar reservaciones para que agregue las nuevas reservaciones a la lista del tableview
-                        cargarReservaciones();
-
-                    } else {
-                        Alert alert2 = new Alert (Alert.AlertType.ERROR);
-                        alert2.setTitle("Error");
-                        alert2.setHeaderText(null);
-                        alert2.setContentText("Hubo un error al eliminar la reservacion");
-                        alert2.initStyle(StageStyle.UTILITY);
-                        alert2.showAndWait();
+                            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                            alert2.setTitle("Exito");
+                            alert2.setHeaderText(null);
+                            alert2.setContentText("Reservación eliminada correctamente");
+                            alert2.showAndWait();
+                        } else {
+                            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                            alert2.setTitle("Error");
+                            alert2.setHeaderText(null);
+                            alert2.setContentText("Error al eliminar la reservación");
+                            alert2.showAndWait();
+                        }
                     }
                 }
             }
-
         });
 
         tvReservaciones.setContextMenu(cmOpciones);
 
     }
+
 
     public void btnGuardarOnAction(ActionEvent event) {
         // Obtener valores comunes
@@ -232,6 +234,12 @@ public class ReservacionesController implements Initializable {
             boolean rsp = this.reservacionDao.registrar(reservacion);
 
             if (rsp){
+                // Actualizar estado de la habitación a "Reservada"
+                HabitacionDao habitacionDao = new HabitacionDao();
+                habitacionDao.actualizarEstado(
+                        habitacionSeleccionada.getId_habitacion(),
+                        "Reservada"
+                    );
                 Alert alert = new Alert (Alert.AlertType.INFORMATION);
                 alert.setTitle("Éxito");
                 alert.setHeaderText(null);
@@ -241,6 +249,7 @@ public class ReservacionesController implements Initializable {
                 limpiarCampos();
                 cargarReservaciones();
             } else {
+
                 Alert alert = new Alert (Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
@@ -250,6 +259,9 @@ public class ReservacionesController implements Initializable {
             }
 
         } else {
+            //Guardar el ID de habitacion original antes de la edicion
+            int idHabitacionOriginal = reservacionSeleccion.getId_habitacion();
+
             // Usamos las variables ya declaradas al inicio
             reservacionSeleccion.setId_cliente(clienteSeleccionado.getId_cliente());
             reservacionSeleccion.setId_habitacion(habitacionSeleccionada.getId_habitacion());
@@ -273,6 +285,23 @@ public class ReservacionesController implements Initializable {
             boolean rsp = this.reservacionDao.editar(reservacionSeleccion);
 
             if (rsp){
+                // Actualizar estados de habitaciones
+                HabitacionDao habitacionDao = new HabitacionDao();
+
+                // ctualizar nueva habitación a "Reservada"
+                habitacionDao.actualizarEstado(
+                        habitacionSeleccionada.getId_habitacion(),
+                        "Reservada"
+                );
+
+                //Si cambió de habitación, actualizar la ANTERIOR a "Disponible"
+                if(idHabitacionOriginal != habitacionSeleccionada.getId_habitacion()) {
+                    habitacionDao.actualizarEstado(
+                            idHabitacionOriginal,
+                            "Disponible"
+                    );
+                }
+
                 Alert alert = new Alert (Alert.AlertType.INFORMATION);
                 alert.setTitle("Éxito");
                 alert.setHeaderText(null);
@@ -301,45 +330,39 @@ public class ReservacionesController implements Initializable {
         fecha_final.setValue(null);
     }
 
-    public void cargarReservaciones(){
-
-        tvReservaciones.getItems().clear();
+    private void inicializarColumnas() {
+        // Limpiar columnas existentes
         tvReservaciones.getColumns().clear();
 
-        List<Reservacion> reservaciones = this.reservacionDao.listar();
-
-        ObservableList<Reservacion> data = FXCollections.observableArrayList(reservaciones);
-
-        // Columna ID
-        TableColumn<Reservacion, Integer> idCol = new TableColumn<>("ID");
+        // Crear columnas
+        idCol = new TableColumn<>("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id_reservacion"));
 
-        // Columna Nombre Cliente
-        TableColumn<Reservacion, String> nombreClienteCol = new TableColumn<>("Cliente");
+        nombreClienteCol = new TableColumn<>("Cliente");
         nombreClienteCol.setCellValueFactory(new PropertyValueFactory<>("nombre_cliente"));
 
-        // Columna Número de Habitación
-        TableColumn<Reservacion, String> numeroHabCol = new TableColumn<>("Habitación");
+        numeroHabCol = new TableColumn<>("Habitación");
         numeroHabCol.setCellValueFactory(new PropertyValueFactory<>("numero_habitacion"));
 
-        // Columna Fecha Entrada
-        TableColumn<Reservacion, String> entradaCol = new TableColumn<>("Entrada");
+        entradaCol = new TableColumn<>("Entrada");
         entradaCol.setCellValueFactory(new PropertyValueFactory<>("fecha_entrada"));
 
-        // Columna Fecha Salida
-        TableColumn<Reservacion, String> salidaCol = new TableColumn<>("Salida");
+        salidaCol = new TableColumn<>("Salida");
         salidaCol.setCellValueFactory(new PropertyValueFactory<>("fecha_salida"));
 
-        // Columna Total
-        TableColumn<Reservacion, Double> totalCol = new TableColumn<>("Total");
+        totalCol = new TableColumn<>("Total");
         totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         // Agregar columnas a la tabla
         tvReservaciones.getColumns().addAll(idCol, nombreClienteCol, numeroHabCol, entradaCol, salidaCol, totalCol);
+    }
 
-        // Cargar los datos
-        tvReservaciones.setItems(data);
+    public void cargarReservaciones() {
+        // Limpiar solo los items, no las columnas
+        tvReservaciones.getItems().clear();
 
+        List<Reservacion> reservaciones = this.reservacionDao.listar();
+        tvReservaciones.getItems().addAll(reservaciones);
     }
 
     private boolean validarDisponibilidad(Habitacion habitacion, LocalDate entrada, LocalDate salida) {
@@ -392,11 +415,33 @@ public class ReservacionesController implements Initializable {
 
 
     public void buttonRegresar(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+        Parent root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void refrescarHabitaciones() {
+        HabitacionDao habitacionDao = new HabitacionDao();
+        List<Habitacion> listaHabitaciones = habitacionDao.listarDisponibles();
+        ObservableList<Habitacion> habitacionObservable = FXCollections.observableArrayList(listaHabitaciones);
+        cboHabitacion.setItems(habitacionObservable);
+
+        // Mantener el formateador
+        cboHabitacion.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Habitacion habitacion, boolean empty) {
+                super.updateItem(habitacion, empty);
+                if (empty || habitacion == null) {
+                    setText(null);
+                } else {
+                    setText(habitacion.getTipo_habitacion() + " - " + habitacion.getNumero_habitacion());
+                }
+            }
+        });
+        cboHabitacion.setButtonCell(cboHabitacion.getCellFactory().call(null));
     }
 
 }

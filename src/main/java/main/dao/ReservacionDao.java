@@ -137,28 +137,55 @@ public class ReservacionDao {
         }
     }
 
-    public boolean eliminar(int id_reservacion){
+    public boolean eliminar(int id_reservacion) {
         String cadena = "jdbc:sqlite:database.db";
 
-        try{
+        try (Connection conexion = DriverManager.getConnection(cadena)) {
+            // Primero obtener la reserva para saber la habitación asociada
+            Reservacion reservacion = buscarPorId(id_reservacion);
+            if (reservacion == null) return false;
 
-            String insertar = "delete from reservaciones where id_reservacion = ?;";
+            // Crear y ejecutar el statement de eliminación
+            String sql = "DELETE FROM reservaciones WHERE id_reservacion = ?";
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, id_reservacion);
+                int filasAfectadas = ps.executeUpdate();
 
-            Connection conexion = DriverManager.getConnection(cadena);
-            PreparedStatement ps = conexion.prepareStatement(insertar);
-
-            ps.setInt(1, id_reservacion);
-            ps.executeUpdate();
-            ps.close();
-
-            return true;
-        }catch (Exception ex){
-            System.err.println(ex);
-            System.err.println("ocurrio un erro al eliminar un cliente");
-            System.err.println("ERROR: " + ex.getMessage());
-
+                if (filasAfectadas > 0) {
+                    // Actualizar estado de la habitación
+                    HabitacionDao habitacionDao = new HabitacionDao();
+                    habitacionDao.actualizarEstado(
+                            reservacion.getId_habitacion(),
+                            "Disponible"
+                    );
+                    return true;
+                }
+                return false;
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al eliminar reservación: " + ex.getMessage());
+            ex.printStackTrace();
             return false;
         }
+    }
+
+    public Reservacion buscarPorId(int id_reservacion) {
+        String sql = "SELECT * FROM reservaciones WHERE id_reservacion = ?";
+        try (Connection conexion = DriverManager.getConnection(cadena);
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, id_reservacion);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Reservacion r = new Reservacion();
+                r.setId_reservacion(rs.getInt("id_reservacion"));
+                r.setId_habitacion(rs.getInt("id_habitacion"));
+                // ... otros campos ...
+                return r;
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al buscar reservación: " + ex.getMessage());
+        }
+        return null;
     }
 
     public boolean estaDisponible(int idHabitacion, String fechaEntrada, String fechaSalida, int excluirReservaId) {

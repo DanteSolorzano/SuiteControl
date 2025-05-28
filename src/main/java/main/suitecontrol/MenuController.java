@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.dao.HabitacionDao;
 
 import java.io.IOException;
 import java.util.EventObject;
@@ -43,6 +44,10 @@ public class MenuController {
     }
 
     public void buttonReservaciones(ActionEvent event) throws IOException {
+        HabitacionDao habitacionDao = new HabitacionDao();
+        habitacionDao.actualizarEstadosSegunReservas();
+
+
         Parent root = FXMLLoader.load(getClass().getResource("reservaciones-view.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
