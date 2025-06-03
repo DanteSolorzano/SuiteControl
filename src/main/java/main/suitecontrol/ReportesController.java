@@ -13,10 +13,8 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,7 +56,7 @@ public class ReportesController {
     private void buttonReporteOA(ActionEvent event) {
         try {
             // Cargar el archivo .jrxml como recurso desde el classpath
-            InputStream jrxmlStream = getClass().getResourceAsStream("/reporteOcupacion.jrxml");
+            InputStream jrxmlStream = getClass().getResourceAsStream("/reports/reporteOcupacion.jrxml");
             if (jrxmlStream == null) {
                 throw new FileNotFoundException("Archivo reporteOcupacion.jrxml no encontrado");
             }

@@ -10,20 +10,20 @@
    <children>
       <TextField layoutX="703.0" layoutY="107.0" />
       <TextField layoutX="703.0" layoutY="149.0" />
-      <Label layoutX="601.0" layoutY="110.0" text="Usuario">
+      <Label fx:id="labelUsuario" layoutX="601.0" layoutY="110.0" text="%usuario">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="601.0" layoutY="153.0" text="Contraseña">
+      <Label fx:id="labelContrasena" layoutX="601.0" layoutY="153.0" text="%contrasena">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="746.0" layoutY="241.0" mnemonicParsing="false" onAction="#SwitchToMenu" text="Iniciar Sesion" />
-      <Button layoutX="635.0" layoutY="241.0" mnemonicParsing="false" text="Crear Usuario" />
-      <Button layoutX="756.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="Esp/" />
-      <Button layoutX="807.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="/En" />
+      <Button fx:id="btnCrear" layoutX="746.0" layoutY="241.0" mnemonicParsing="false" onAction="#SwitchToMenu" text="%iniciar_sesion" />
+      <Button fx:id="btnIniciar" layoutX="635.0" layoutY="241.0" mnemonicParsing="false" text="%crear_usuario" />
+      <Button layoutX="756.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonEsp" prefHeight="25.0" prefWidth="45.0" text="Esp/" />
+      <Button layoutX="807.0" layoutY="17.0" mnemonicParsing="false" onAction="#ButtonEn" prefHeight="25.0" prefWidth="45.0" text="/En" />
       <Label layoutX="240.0" layoutY="189.0" prefHeight="169.0" prefWidth="129.0" text="🏨">
          <font>
             <Font size="96.0" />
