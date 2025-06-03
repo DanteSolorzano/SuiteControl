@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.HelloController">
    <children>
       <TextField layoutX="703.0" layoutY="107.0" />
@@ -23,5 +22,12 @@
       </Label>
       <Button layoutX="746.0" layoutY="241.0" mnemonicParsing="false" onAction="#SwitchToMenu" text="Iniciar Sesion" />
       <Button layoutX="635.0" layoutY="241.0" mnemonicParsing="false" text="Crear Usuario" />
+      <Button layoutX="756.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="Esp/" />
+      <Button layoutX="807.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="/En" />
+      <Label layoutX="240.0" layoutY="189.0" prefHeight="169.0" prefWidth="129.0" text="🏨">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

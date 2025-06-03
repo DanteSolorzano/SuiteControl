@@ -4,10 +4,7 @@ import main.modelo.Cliente;
 import main.modelo.Habitacion;
 import main.modelo.Reservacion;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,6 +208,5 @@ public class HabitacionDao {
         return listaHabitaciones;
 
     }
-
 
 }

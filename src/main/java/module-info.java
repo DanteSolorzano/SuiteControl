@@ -2,6 +2,7 @@ module main.suitecontrol {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires jasperreports;
 
 
     opens main.suitecontrol to javafx.fxml;

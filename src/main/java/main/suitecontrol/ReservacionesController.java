@@ -423,6 +423,7 @@ public class ReservacionesController implements Initializable {
         stage.show();
     }
 
+    /*
     public void refrescarHabitaciones() {
         HabitacionDao habitacionDao = new HabitacionDao();
         List<Habitacion> listaHabitaciones = habitacionDao.listarDisponibles();
@@ -442,6 +443,6 @@ public class ReservacionesController implements Initializable {
             }
         });
         cboHabitacion.setButtonCell(cboHabitacion.getCellFactory().call(null));
-    }
+    } */
 
 }

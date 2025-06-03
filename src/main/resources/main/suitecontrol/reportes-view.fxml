@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="934.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.ReportesController">
+    <children>
+        <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" text="Generacion de reportes">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+        <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRegresar" text="Regresar" />
+        <AnchorPane layoutX="14.0" layoutY="87.0" prefHeight="534.0" prefWidth="906.0">
+            <children>
+                <AnchorPane layoutX="6.0" layoutY="6.0" prefHeight="520.0" prefWidth="895.0" style="-fx-border-color: black;">
+                    <children>
+                        <Button fx:id="buttonReporteOcupacion" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonReporteOcupacion" prefHeight="107.0" prefWidth="866.0" text="Generar reporte de ocupacion" />
+                  <Button fx:id="buttonReporteOcupacion1" layoutX="15.0" layoutY="128.0" mnemonicParsing="false" onAction="#buttonReporteIngresosOA" prefHeight="107.0" prefWidth="866.0" text="Generar reporte de ingresos" />
+                  <Button fx:id="buttonReporteOcupacion11" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" onAction="#buttonReportePrediccionOA" prefHeight="107.0" prefWidth="866.0" text="Generar reporte de prediccion de ocupacion" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</Pane>

@@ -3,10 +3,7 @@ package main.dao;
 import main.modelo.Cliente;
 import main.modelo.Reservacion;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +60,7 @@ public class ReservacionDao {
                             h.numero_habitacion,
                             r.fecha_entrada,
                             r.fecha_salida,
-                            r.total
+                            ROUND(r.total, 3) AS total
                         FROM reservaciones r
                         JOIN clientes c ON r.id_cliente = c.id_cliente
                         JOIN habitaciones h ON r.id_habitacion = h.id_habitacion;
@@ -217,5 +214,7 @@ public class ReservacionDao {
         }
         return false;
     }
+
+
 
 }

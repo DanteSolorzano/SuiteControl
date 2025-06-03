@@ -37,9 +37,6 @@
             </Button>
          </children>
       </GridPane>
-      <Button layoutX="831.0" layoutY="36.0" mnemonicParsing="false" text="/En" />
-      <Button layoutX="795.0" layoutY="36.0" mnemonicParsing="false" text="Es/" />
-      <Label layoutX="816.0" layoutY="14.0" text="Idioma" />
       <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" text="Opciones">
          <font>
             <Font name="System Bold" size="28.0" />
@@ -54,12 +51,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="252.0" prefWidth="395.0" text="Generacion de reportes">
+            <Button mnemonicParsing="false" onAction="#buttonReportes" prefHeight="252.0" prefWidth="395.0" text="Generacion de reportes">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="277.0" layoutY="12.0" mnemonicParsing="false" prefHeight="251.0" prefWidth="408.0" text="Analisis de datos" GridPane.columnIndex="1">
+            <Button layoutX="277.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonAnalisis" prefHeight="251.0" prefWidth="408.0" text="Analisis de datos" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

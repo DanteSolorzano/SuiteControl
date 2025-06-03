@@ -1,0 +1,55 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="reporteOcupacion" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<query language="sql"><![CDATA[SELECT 
+    STRFTIME('%Y-%m', fecha_entrada) AS mes,
+    COUNT(id_reservacion) AS total_reservaciones
+FROM 
+    reservaciones
+GROUP BY 
+    mes
+ORDER BY 
+    mes
+]]></query>
+	<field name="mes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="mes"/>
+		<property name="com.jaspersoft.studio.field.label" value="mes"/>
+	</field>
+	<field name="total_reservaciones" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="total_reservaciones"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_reservaciones"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="textField"  x="160" y="30" width="250" height="30" fontName="Arial Black" fontSize="19.0" hTextAlign="Center">
+			<expression><![CDATA["Reporte de ocupacion"]]></expression>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="47" splitType="Stretch">
+		<element kind="staticText"  x="80" y="10" width="100" height="30" fontName="Arial" fontSize="15.0" hTextAlign="Center">
+			<text><![CDATA[mes]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="836a37fe-e691-4e61-aaa2-afa298f2e81b"/>
+		</element>
+		<element kind="staticText" x="380" y="10" width="140" height="30" fontName="Arial" fontSize="15.0" hTextAlign="Center">
+			<text><![CDATA[total_reservaciones]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e117f7de-6354-4e20-89eb-7380dd30ffe0"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="166" splitType="Stretch">
+			<element kind="textField"  x="80" y="30" width="100" height="30" hTextAlign="Center">
+				<expression><![CDATA[$F{mes}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="836a37fe-e691-4e61-aaa2-afa298f2e81b"/>
+			</element>
+			<element kind="textField"  x="380" y="30" width="120" height="30" hTextAlign="Center">
+				<expression><![CDATA[$F{total_reservaciones}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e117f7de-6354-4e20-89eb-7380dd30ffe0"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="28" splitType="Stretch"/>
+	<pageFooter height="29" splitType="Stretch"/>
+	<summary height="20" splitType="Stretch"/>
+</jasperReport>
