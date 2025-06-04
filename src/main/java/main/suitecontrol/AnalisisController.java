@@ -62,7 +62,7 @@ public class AnalisisController implements Initializable {
         // Llenar combo box de años dinámicamente
         int añoActual = Year.now().getValue();
         List<Integer> años = new ArrayList<>();
-        for (int i = añoActual; i <= añoActual + 10; i++) { // 10 años futuros
+        for (int i = añoActual; i <= añoActual + 10; i++) { // 10 años futuros, establecido en .properties pero aun no implementado
             años.add(i);
         }
         cboAñoAnalisis.setItems(FXCollections.observableArrayList(años));

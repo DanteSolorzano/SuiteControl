@@ -29,7 +29,8 @@ import java.util.ResourceBundle;
 
 
 public class ClientesController implements Initializable {
-    public TextField txtAmaterno;
+
+
     @FXML
     private Button btnCancelar;
 
@@ -59,6 +60,16 @@ public class ClientesController implements Initializable {
     private ContextMenu cmOPciones;
 
     private Cliente clienteSeleccion;
+
+    public TextField txtAmaterno;
+    public Label labelNombre;
+    public Label labelApaterno;
+    public Label labelAmaterno;
+    public Label labelTelefono;
+    public Label labelCorreo;
+    public Label labelIdentificacion;
+    public Button btnRegresar;
+    public Label labelManejadorClientes;
 
 
     //Agrega las opciones al combo box
@@ -324,5 +335,29 @@ public class ClientesController implements Initializable {
         stage.show();
     }
 
+    // Cambiar idioma a inglés
+    public void ButtonEn(ActionEvent event) {
+        loadLanguage("en", "US"); // "en" sin país
+    }
+
+    // Cambiar idioma a español (México)
+    public void buttonEsp(ActionEvent event) {
+        loadLanguage("es", "MX");
+    }
+    private void loadLanguage(String language, String country) {
+        Locale locale = new Locale(language, country);
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        btnRegresar.setText(bundle.getString("regresarC"));
+        btnCancelar.setText(bundle.getString("cancelar"));
+        btnGuardar.setText(bundle.getString("guardar"));
+        labelNombre.setText(bundle.getString("nombre"));
+        labelApaterno.setText(bundle.getString("apellido_paterno"));
+        labelAmaterno.setText(bundle.getString("apellido_materno"));
+        labelCorreo.setText(bundle.getString("correo"));
+        labelTelefono.setText(bundle.getString("numero_telefono"));
+        labelIdentificacion.setText(bundle.getString("tipo_identificacion"));
+        labelManejadorClientes.setText(bundle.getString("manejador_huespedes"));
+    }
 
 }
