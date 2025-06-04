@@ -1,6 +1,5 @@
 package main.suitecontrol;
 import javafx.scene.chart.NumberAxis;
-import main.dao.OcupacionDao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -187,43 +186,6 @@ public class AnalisisController implements Initializable {
     }
 
     @FXML
-    private void graficarPrediccion(ActionEvent event) {
-        // Obtener año seleccionado del ComboBox normal
-        Integer añoBase = cboAñoAnalisis.getValue();
-        if (añoBase == null) {
-            mostrarAlerta("Advertencia", "Debes seleccionar un año para graficar.");
-            return;
-        }
-
-        // Obtener datos históricos y entrenar modelo
-        List<RegistroOcupacion> datos = obtenerDatosOcupacion();
-        if (datos.size() < 2) {
-            mostrarAlerta("Error", "No hay suficientes datos históricos para generar una gráfica.");
-            return;
-        }
-
-        OcupacionDao dao = new OcupacionDao();
-        dao.entrenarModelo(datos);
-
-        // Limpiar gráfica
-        lineChartOcupacion.getData().clear();
-
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Ocupación estimada");
-
-        int contadorMes = 1;
-        for (int i = 0; i < 3; i++) { // 3 años desde añoBase
-            int año = añoBase + i;
-            for (int mes = 1; mes <= 12; mes++) {
-                double pred = dao.predecir(año, mes);
-                series.getData().add(new XYChart.Data<>(contadorMes++, pred));
-            }
-        }
-
-        lineChartOcupacion.getData().add(series);
-    }
-
-    @FXML
     public void buttonGraficar(ActionEvent event) {
         String mesTexto = cboMesAnalisis.getValue();
         Integer añoSeleccionado = cboAñoAnalisis.getValue();
@@ -242,42 +204,58 @@ public class AnalisisController implements Initializable {
             return;
         }
 
-        // Entrenar el modelo
-        OcupacionDao modelo = new OcupacionDao();
-        modelo.entrenarModelo(datos);
+        // Calcular regresión lineal
+        double[] resultado = calcularRegresionLineal(datos);
+        double m = resultado[0];
+        double b = resultado[1];
 
-        // Limpiar gráfica anterior
+        // Limpiar gráfico anterior
         lineChartOcupacion.getData().clear();
 
-        // Configurar ejes
         NumberAxis xAxis = (NumberAxis) lineChartOcupacion.getXAxis();
         xAxis.setLabel("Año");
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(añoSeleccionado - 1);
-        xAxis.setUpperBound(añoSeleccionado + 3); // Mostrar desde año actual + 3 años
-        xAxis.setTickUnit(1);
+        xAxis.setAutoRanging(true);
 
-        NumberAxis yAxis = (NumberAxis) lineChartOcupacion.getYAxis();
-        yAxis.setLabel("Reservaciones estimadas");
-        yAxis.setAutoRanging(true);
+        XYChart.Series<Number, Number> serie = new XYChart.Series<>();
+        serie.setName("Predicción para " + mesTexto);
 
-        // Crear serie para predicciones
-        XYChart.Series<Number, Number> seriePrediccion = new XYChart.Series<>();
-        seriePrediccion.setName("Predicción para " + mesTexto);
+        // Llamar a recursividad para generar predicciones desde añoSeleccionado hasta +2
+        agregarPrediccionesRecursivas(añoSeleccionado, mes, m, b, 0, 3, serie);
 
-        // Solo 3 puntos: año actual + 1, +2 y +3
-        for (int i = 0; i < 3; i++) {
-            int añoPrediccion = añoSeleccionado + i;
-            double prediccion = modelo.predecir(añoPrediccion, mes);
+        lineChartOcupacion.getData().add(serie);
 
-            // Usar el año como valor X (no la fecha numérica completa)
-            seriePrediccion.getData().add(new XYChart.Data<>(añoPrediccion, prediccion));
+        // Etiquetas personalizadas del eje X
+        xAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(xAxis) {
+            @Override
+            public String toString(Number object) {
+                int index = object.intValue() - 1;
+                return String.valueOf(añoSeleccionado + index);
+            }
+        });
+    }
+
+    private void agregarPrediccionesRecursivas(int añoBase, int mes, double m, double b, int contador, int limite, XYChart.Series<Number, Number> serie) {
+        if (contador >= limite) {
+            return;
         }
 
-        // Añadir serie a la gráfica
-        lineChartOcupacion.getData().add(seriePrediccion);
+        int añoActual = añoBase + contador;
+        int fechaNumerica = añoActual * 100 + mes;
+        double prediccion = m * fechaNumerica + b;
+        double valorRedondeado = Math.round(prediccion);
 
+        // Eje X: contador + 1 (para empezar en 1)
+        serie.getData().add(new XYChart.Data<>(contador + 1, valorRedondeado));
+
+        // Imprimir para depurar
+        //System.out.printf("Predicción para %d: %.2f%n", añoActual, valorRedondeado);
+
+        // Llamada recursiva
+        agregarPrediccionesRecursivas(añoBase, mes, m, b, contador + 1, limite, serie);
     }
+
+
+
 
 
 
