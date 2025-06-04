@@ -85,7 +85,20 @@ public class MenuController {
     }
 
     public void buttonHabitaciones(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("habitaciones-view.fxml"));
+        // 1. Obtener el locale configurado (usando tu clase ConfigProperties)
+        Locale locale = ConfigProperties.getLocale();
+
+        // 2. Cargar el ResourceBundle con el locale actual
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        // 3. Crear el FXMLLoader configurado
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("habitaciones-view.fxml"));
+        loader.setResources(bundle);  // ¡Clave para la internacionalización!
+
+        // 4. Cargar el Parent
+        Parent root = loader.load();
+
+        // 5. Configurar la escena y mostrar
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -97,7 +110,20 @@ public class MenuController {
         habitacionDao.actualizarEstadosSegunReservas();
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("reservaciones-view.fxml"));
+        // 1. Obtener el locale configurado (usando tu clase ConfigProperties)
+        Locale locale = ConfigProperties.getLocale();
+
+        // 2. Cargar el ResourceBundle con el locale actual
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        // 3. Crear el FXMLLoader configurado
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("reservaciones-view.fxml"));
+        loader.setResources(bundle);  // ¡Clave para la internacionalización!
+
+        // 4. Cargar el Parent
+        Parent root = loader.load();
+
+        // 5. Configurar la escena y mostrar
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -105,7 +131,20 @@ public class MenuController {
     }
 
     public void buttonAnalisis(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("analisis-view.fxml"));
+        // 1. Obtener el locale configurado (usando tu clase ConfigProperties)
+        Locale locale = ConfigProperties.getLocale();
+
+        // 2. Cargar el ResourceBundle con el locale actual
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        // 3. Crear el FXMLLoader configurado
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("analisis-view.fxml"));
+        loader.setResources(bundle);  // ¡Clave para la internacionalización!
+
+        // 4. Cargar el Parent
+        Parent root = loader.load();
+
+        // 5. Configurar la escena y mostrar
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -113,7 +152,20 @@ public class MenuController {
     }
 
     public void buttonReportes(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("reportes-view.fxml"));
+        // 1. Obtener el locale configurado (usando tu clase ConfigProperties)
+        Locale locale = ConfigProperties.getLocale();
+
+        // 2. Cargar el ResourceBundle con el locale actual
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        // 3. Crear el FXMLLoader configurado
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("reportes-view.fxml"));
+        loader.setResources(bundle);  // ¡Clave para la internacionalización!
+
+        // 4. Cargar el Parent
+        Parent root = loader.load();
+
+        // 5. Configurar la escena y mostrar
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
