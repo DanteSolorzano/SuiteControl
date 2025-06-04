@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import main.ResourceBundle.ConfigProperties;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -56,11 +57,27 @@ public class HelloController {
     }
 
     public void SwitchToMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
+
+        // 1. Obtener el locale configurado (usando tu clase ConfigProperties)
+        Locale locale = ConfigProperties.getLocale();
+
+        // 2. Cargar el ResourceBundle con el locale actual
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        // 3. Crear el FXMLLoader configurado
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+        loader.setResources(bundle);  // ¡Clave para la internacionalización!
+
+        // 4. Cargar el Parent
+        Parent root = loader.load();
+
+        // 5. Configurar la escena y mostrar
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
+
     }
 
 }

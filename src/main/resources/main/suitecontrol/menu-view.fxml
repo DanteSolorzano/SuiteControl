@@ -20,24 +20,24 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#buttonClientes" prefHeight="252.0" prefWidth="278.0" text="Gestion de clientes">
+            <Button fx:id="btnClientesG" mnemonicParsing="false" onAction="#buttonClientes" prefHeight="252.0" prefWidth="278.0" text="%gestion_de_clientes">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonHabitaciones" prefHeight="252.0" prefWidth="278.0" text="Gestion de habitaciones" GridPane.columnIndex="1">
+            <Button fx:id="btnHabitacionesG" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonHabitaciones" prefHeight="252.0" prefWidth="278.0" text="%gestion_de_habitaciones" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="277.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonReservaciones" prefHeight="252.0" prefWidth="278.0" text="Gestion de reservaciones" GridPane.columnIndex="2">
+            <Button fx:id="btnReservacionesG" layoutX="277.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonReservaciones" prefHeight="252.0" prefWidth="278.0" text="%gestion_de_reservaciones" GridPane.columnIndex="2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" text="Opciones">
+      <Label fx:id="labelOpciones" layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" text="%opciones">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
@@ -51,18 +51,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#buttonReportes" prefHeight="252.0" prefWidth="395.0" text="Generacion de reportes">
+            <Button fx:id="btnReportesG" mnemonicParsing="false" onAction="#buttonReportes" prefHeight="252.0" prefWidth="395.0" text="%generacion_de_reportes">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="277.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonAnalisis" prefHeight="251.0" prefWidth="408.0" text="Analisis de datos" GridPane.columnIndex="1">
+            <Button fx:id="btnAnalisiG" layoutX="277.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonAnalisis" prefHeight="251.0" prefWidth="408.0" text="%analisis_de_datos" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#SwitchToInicio" text="Regresar" />
+      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#SwitchToInicio" text="%regresar" />
+      <Button layoutX="756.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonEsp" prefHeight="25.0" prefWidth="45.0" text="Esp/" />
+      <Button layoutX="807.0" layoutY="17.0" mnemonicParsing="false" onAction="#ButtonEn" prefHeight="25.0" prefWidth="45.0" text="/En" />
    </children>
 </Pane>

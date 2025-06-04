@@ -1,0 +1,55 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.0  -->
+<jasperReport name="ReporteIngresos" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3956fc7b-1083-488a-9f13-961b8b0a90f0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<query language="sql"><![CDATA[SELECT 
+    strftime('%Y-%m', fecha_entrada) AS mes,
+    ROUND(SUM(total), 3) AS ingresos_mensuales
+FROM 
+    reservaciones
+GROUP BY 
+    mes
+ORDER BY 
+    mes
+]]></query>
+	<field name="mes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="mes"/>
+		<property name="com.jaspersoft.studio.field.label" value="mes"/>
+	</field>
+	<field name="ingresos_mensuales" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="ingresos_mensuales"/>
+		<property name="com.jaspersoft.studio.field.label" value="ingresos_mensuales"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="textField" uuid="005a7654-5ed3-48da-90af-ee773079dd03" x="80" y="21" width="400" height="30" fontName="Arial Black" fontSize="16.0" hTextAlign="Center">
+			<expression><![CDATA["Reporte de ingresos por mes"]]></expression>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch">
+		<element kind="staticText" uuid="51e25240-fade-4e20-805f-a73838645f69" x="80" y="10" width="100" height="30" fontName="Arial" fontSize="14.0" hTextAlign="Center">
+			<text><![CDATA[mes]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c26fbf9-888a-4c02-92fd-626724c5deed"/>
+		</element>
+		<element kind="staticText" uuid="c9fdc9c4-2406-40ca-84b2-777830e222d9" x="360" y="10" width="150" height="30" fontName="Arial" fontSize="14.0" hTextAlign="Center">
+			<text><![CDATA[ingresos_mensuales]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb4a2a8e-475d-4fd3-a0eb-733910c70832"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<element kind="textField" uuid="eef57c00-db03-43ad-990c-707aa9d8020c" x="80" y="40" width="100" height="30" fontName="Arial" fontSize="11.0" hTextAlign="Center">
+				<expression><![CDATA[$F{mes}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c26fbf9-888a-4c02-92fd-626724c5deed"/>
+			</element>
+			<element kind="textField" uuid="472d8b5f-75d1-4e85-8476-171fce2f5bab" x="380" y="40" width="100" height="30" fontName="Arial" fontSize="11.0" hTextAlign="Center">
+				<expression><![CDATA[$F{ingresos_mensuales}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb4a2a8e-475d-4fd3-a0eb-733910c70832"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import main.ResourceBundle.ConfigProperties;
 import main.dao.ClienteDao;
 import main.dao.HabitacionDao;
 import main.dao.ReservacionDao;
@@ -25,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -415,8 +417,20 @@ public class ReservacionesController implements Initializable {
 
 
     public void buttonRegresar(ActionEvent event) throws IOException {
+        // 1. Obtener el locale configurado (usando tu clase ConfigProperties)
+        Locale locale = ConfigProperties.getLocale();
+
+        // 2. Cargar el ResourceBundle con el locale actual
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        // 3. Crear el FXMLLoader configurado
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+        loader.setResources(bundle);  // ¡Clave para la internacionalización!
+
+        // 4. Cargar el Parent
         Parent root = loader.load();
+
+        // 5. Configurar la escena y mostrar
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
