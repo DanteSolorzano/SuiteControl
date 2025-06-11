@@ -327,7 +327,6 @@ public class HabitacionesController implements Initializable {
         btnCancelar.setText(bundle.getString("cancelarH"));
         btnRegresarH.setText(bundle.getString("regresarH"));
         labelManejadorDeHrespedes.setText(bundle.getString("manejador_habitaciones"));
-
     }
 
 }

@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import main.ResourceBundle.ConfigProperties;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -28,8 +29,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ReportesController {
-    @FXML
-    private Button buttonGraficas;
+    public Label labelGeneracionReportes;
+    public Button btnRegresarRe;
+    public Button buttonReporteIngresos;
+    public Button buttonReportePrediccion;
+
 
     @FXML
     private Button buttonReporteOcupacion;
@@ -139,5 +143,26 @@ public class ReportesController {
     }
 
     public void buttonReportePrediccionOA(ActionEvent event) {
+    }
+
+    // Cambiar idioma a inglés
+    public void ButtonEn(ActionEvent event) {
+        loadLanguage("en", "US"); // "en" sin país
+    }
+
+    // Cambiar idioma a español (México)
+    public void buttonEsp(ActionEvent event) {
+        loadLanguage("es", "MX");
+    }
+    private void loadLanguage(String language, String country) {
+        Locale locale = new Locale(language, country);
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        labelGeneracionReportes.setText(bundle.getString("generacion_reportes"));
+        btnRegresarRe.setText(bundle.getString("regresarRe"));
+        buttonReporteOcupacion.setText(bundle.getString("generar_reporte_de_ocupacion"));
+        buttonReporteIngresos.setText(bundle.getString("generar_reporte_de_ingresos"));
+        buttonReportePrediccion.setText(bundle.getString("generar_reporte_de_prediccion_de_ocupacion"));
+
     }
 }

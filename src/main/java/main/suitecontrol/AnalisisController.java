@@ -14,6 +14,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,11 @@ import main.modelo.RegistroOcupacion;
 
 public class AnalisisController implements Initializable {
 
+    public Button btnRegresarA;
+    public Label labelMes;
+    public Label labelAño;
+    public Label labelAnalisisDatos;
+    public Label labelAnalisisPredictivo;
     @FXML
     private Button buttonGraficas;
 
@@ -254,12 +260,27 @@ public class AnalisisController implements Initializable {
         agregarPrediccionesRecursivas(añoBase, mes, m, b, contador + 1, limite, serie);
     }
 
+    // Cambiar idioma a inglés
+    public void ButtonEn(ActionEvent event) {
+        loadLanguage("en", "US"); // "en" sin país
+    }
 
+    // Cambiar idioma a español (México)
+    public void buttonEsp(ActionEvent event) {
+        loadLanguage("es", "MX");
+    }
+    private void loadLanguage(String language, String country) {
+        Locale locale = new Locale(language, country);
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
 
+        labelMes.setText(bundle.getString("seleccione_mes"));
+        labelAño.setText(bundle.getString("seleccione_año"));
+        labelAnalisisDatos.setText(bundle.getString("analisis_datos"));
+        labelAnalisisPredictivo.setText(bundle.getString("analisis_predictivo_de_estimacion_de_ocupacion"));
+        buttonResultados.setText(bundle.getString("generar_resultados"));
+        buttonGraficas.setText(bundle.getString("generar_graficas"));
+        btnRegresarA.setText(bundle.getString("regresarA"));
 
-
-
-
-
+    }
 
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
@@ -12,37 +11,39 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="934.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.AnalisisController">
    <children>
-      <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" text="Analisis de datos">
+      <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" fx:id="labelAnalisisDatos" text="%analisis_datos">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRegresar" text="Regresar" />
+      <Button fx:id="btnRegresarA" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRegresar" text="%regresarA" />
+      <Button layoutX="824.0" layoutY="23.0" mnemonicParsing="false" onAction="#buttonEsp" prefHeight="25.0" prefWidth="45.0" text="Esp/" />
+      <Button layoutX="875.0" layoutY="23.0" mnemonicParsing="false" onAction="#ButtonEn" prefHeight="25.0" prefWidth="45.0" text="/En" />
       <AnchorPane layoutX="14.0" layoutY="87.0" prefHeight="534.0" prefWidth="906.0">
          <children>
             <AnchorPane layoutX="6.0" layoutY="6.0" prefHeight="520.0" prefWidth="327.0" style="-fx-border-color: black;">
                <children>
-                  <Label layoutX="23.0" layoutY="24.0" text="Analisis predictivo de estimacion de ocupacion">
+                  <Label layoutX="23.0" layoutY="24.0" fx:id="labelAnalisisPredictivo" text="%analisis_predictivo_de_estimacion_de_ocupacion">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="23.0" layoutY="63.0" text="Seleccione un mes" />
+                  <Label fx:id="labelMes" layoutX="23.0" layoutY="63.0" text="%seleccione_mes" />
                   <ComboBox fx:id="cboMesAnalisis" layoutX="23.0" layoutY="96.0" prefWidth="150.0" />
-                  <Button fx:id="buttonResultados" layoutX="23.0" layoutY="466.0" mnemonicParsing="false" onAction="#buttonResultados" text="Generar resultados" />
+                  <Button fx:id="buttonResultados" layoutX="23.0" layoutY="466.0" mnemonicParsing="false" onAction="#buttonResultados" text="%generar_resultados" />
                   <ComboBox fx:id="cboAñoAnalisis" layoutX="23.0" layoutY="167.0" prefWidth="150.0" />
-                  <Button fx:id="buttonGraficas" layoutX="183.0" layoutY="466.0" mnemonicParsing="false" text="Generar graficas" onAction="#buttonGraficar" />
-                  <Label layoutX="23.0" layoutY="138.0" text="Seleccione un año" />
+                  <Button fx:id="buttonGraficas" layoutX="183.0" layoutY="466.0" mnemonicParsing="false" onAction="#buttonGraficar" text="%generar_graficas" />
+                  <Label fx:id="labelAño" layoutX="23.0" layoutY="138.0" text="%seleccione_año" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="345.0" layoutY="6.0" prefHeight="520.0" prefWidth="553.0" style="-fx-border-color: black;">
                <children>
-                  <LineChart layoutX="12.0" layoutY="13.0" prefHeight="494.0" prefWidth="527.0" fx:id="lineChartOcupacion" title="Predicción de Ocupación">
+                  <LineChart fx:id="lineChartOcupacion" layoutX="12.0" layoutY="13.0" prefHeight="494.0" prefWidth="527.0" title="Predicción de Ocupación">
                     <xAxis>
-                      <NumberAxis side="BOTTOM" label="Periodo(Años)"/>
+                      <NumberAxis label="Periodo(Años)" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis side="LEFT" label="Reservaciones" />
+                      <NumberAxis label="Reservaciones" side="LEFT" />
                     </yAxis>
                   </LineChart>
                </children></AnchorPane>

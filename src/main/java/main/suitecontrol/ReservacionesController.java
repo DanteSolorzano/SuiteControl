@@ -32,6 +32,13 @@ import java.util.ResourceBundle;
 
 public class ReservacionesController implements Initializable {
 
+    public Label labelHuesped;
+    public Label labelHabitacion;
+    public Label label_entrada;
+    public Label label_salida;
+    public Button btnAceptar;
+    public Button btnRegresar;
+    public Label labelGestionReservaciones;
     @FXML
     private ComboBox<Cliente> cboCliente;
 
@@ -437,26 +444,27 @@ public class ReservacionesController implements Initializable {
         stage.show();
     }
 
-    /*
-    public void refrescarHabitaciones() {
-        HabitacionDao habitacionDao = new HabitacionDao();
-        List<Habitacion> listaHabitaciones = habitacionDao.listarDisponibles();
-        ObservableList<Habitacion> habitacionObservable = FXCollections.observableArrayList(listaHabitaciones);
-        cboHabitacion.setItems(habitacionObservable);
+    // Cambiar idioma a inglés
+    public void ButtonEn(ActionEvent event) {
+        loadLanguage("en", "US"); // "en" sin país
+    }
 
-        // Mantener el formateador
-        cboHabitacion.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Habitacion habitacion, boolean empty) {
-                super.updateItem(habitacion, empty);
-                if (empty || habitacion == null) {
-                    setText(null);
-                } else {
-                    setText(habitacion.getTipo_habitacion() + " - " + habitacion.getNumero_habitacion());
-                }
-            }
-        });
-        cboHabitacion.setButtonCell(cboHabitacion.getCellFactory().call(null));
-    } */
+    // Cambiar idioma a español (México)
+    public void buttonEsp(ActionEvent event) {
+        loadLanguage("es", "MX");
+    }
+    private void loadLanguage(String language, String country) {
+        Locale locale = new Locale(language, country);
+        ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+
+        labelHuesped.setText(bundle.getString("seleccione_huesped"));
+        labelHabitacion.setText(bundle.getString("seleccione_habitacion"));
+        label_entrada.setText(bundle.getString("fecha_entrada"));
+        label_salida.setText(bundle.getString("fecha_salida"));
+        btnAceptar.setText(bundle.getString("aceptar"));
+        btnCancelarReserva.setText(bundle.getString("cancelarR"));
+        btnRegresar.setText(bundle.getString("regresarR"));
+        labelGestionReservaciones.setText(bundle.getString("gestion_reservaciones"));
+    }
 
 }

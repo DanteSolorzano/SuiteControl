@@ -8,19 +8,21 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="934.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.suitecontrol.ReportesController">
     <children>
-        <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" text="Generacion de reportes">
+        <Label layoutX="67.0" layoutY="36.0" prefHeight="51.0" prefWidth="357.0" fx:id="labelGeneracionReportes" text="%generacion_reportes">
             <font>
                 <Font name="System Bold" size="28.0" />
             </font>
         </Label>
-        <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRegresar" text="Regresar" />
+        <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRegresar" fx:id="btnRegresarRe" text="%regresarRe" />
+        <Button layoutX="824.0" layoutY="23.0" mnemonicParsing="false" onAction="#buttonEsp" prefHeight="25.0" prefWidth="45.0" text="Esp/" />
+        <Button layoutX="875.0" layoutY="23.0" mnemonicParsing="false" onAction="#ButtonEn" prefHeight="25.0" prefWidth="45.0" text="/En" />
         <AnchorPane layoutX="14.0" layoutY="87.0" prefHeight="534.0" prefWidth="906.0">
             <children>
                 <AnchorPane layoutX="6.0" layoutY="6.0" prefHeight="520.0" prefWidth="895.0" style="-fx-border-color: black;">
                     <children>
-                        <Button fx:id="buttonReporteOcupacion" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonReporteOcupacion" prefHeight="107.0" prefWidth="866.0" text="Generar reporte de ocupacion" />
-                  <Button fx:id="buttonReporteOcupacion1" layoutX="15.0" layoutY="128.0" mnemonicParsing="false" onAction="#buttonReporteIngresosOA" prefHeight="107.0" prefWidth="866.0" text="Generar reporte de ingresos" />
-                  <Button fx:id="buttonReporteOcupacion11" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" onAction="#buttonReportePrediccionOA" prefHeight="107.0" prefWidth="866.0" text="Generar reporte de prediccion de ocupacion" />
+                        <Button fx:id="buttonReporteOcupacion" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonReporteOcupacion" prefHeight="107.0" prefWidth="866.0" text="%generar_reporte_de_ocupacion" />
+                  <Button fx:id="buttonReporteIngresos" layoutX="15.0" layoutY="128.0" mnemonicParsing="false" onAction="#buttonReporteIngresosOA" prefHeight="107.0" prefWidth="866.0" text="%generar_reporte_de_ingresos" />
+                  <Button fx:id="buttonReportePrediccion" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" onAction="#buttonReportePrediccionOA" prefHeight="107.0" prefWidth="866.0" text="%generar_reporte_de_prediccion_de_ocupacion" />
                     </children>
                 </AnchorPane>
             </children>
